@@ -1,0 +1,647 @@
+@charset "UTF-8";
+/* ==========================================================================
+   Base & Reset
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-dark: #0b0f19;
+    --bg-card: #131a2c;
+    --text-light: #f3f4f6;
+    --text-muted: #9ca3af;
+    --accent-gold: #d4af37;
+    --font-serif: 'Times New Roman', 'Noto Serif JP', serif;
+    --font-sans: 'Helvetica Neue', 'Arial', 'Noto Sans JP', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    line-height: 1.8;
+}
+
+/* 背景パーティクル用のレイヤー */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* セクションタイトル */
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-subtitle {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.section-title h2 {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 20px;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+section {
+    padding: 120px 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* ==========================================================================
+   Header Navigation
+   ========================================================================== */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 50px;
+    background: rgba(11, 15, 25, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    display: table;
+}
+
+.logo-area {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    letter-spacing: 0.2em;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 300;
+}
+
+nav {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+}
+
+nav ul {
+    list-style: none;
+    display: inline-block;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-left: 35px;
+}
+
+nav ul li a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    transition: color 0.3s;
+    font-family: var(--font-serif);
+}
+
+nav ul li a:hover {
+    color: var(--accent-gold);
+}
+
+/* ==========================================================================
+   Hero Section (高級ホテル仕様イマーシブ・スライダー)
+   ========================================================================== */
+.hero {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+
+.hero-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    z-index: 1;
+    /* 高級ホテルクオリティの、じわっと拡大していく超低速ズーム */
+    transform: scale(1.08);
+    transition: opacity 2s ease-in-out, transform 7s ease-out;
+}
+
+/* JavaScriptでactiveクラスがついた瞬間にフェードインし、元の縮尺に戻っていく */
+.hero-slide.active {
+    opacity: 1;
+    z-index: 2;
+    transform: scale(1);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(11,15,25,0.1) 0%, rgba(11,15,25,0.75) 100%);
+    z-index: 3;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 4;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-family: var(--font-serif);
+    font-size: 64px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    margin-bottom: 25px;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(255,255,255,0.15);
+}
+
+.hero-content p {
+    font-size: 16px;
+    letter-spacing: 0.25em;
+    color: var(--text-light);
+    line-height: 2.2;
+}
+
+/* ==========================================================================
+   Brand Story Section
+   ========================================================================== */
+.brand-table {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 50px 0;
+    margin: 0 -50px;
+}
+
+.brand-col {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.brand-image-wrapper {
+    position: relative;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 18px;
+    background: rgba(19, 26, 44, 0.4);
+}
+
+.brand-image-wrapper img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    display: block;
+}
+
+.brand-content h3 {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--accent-gold);
+    margin-bottom: 30px;
+    letter-spacing: 0.15em;
+}
+
+.brand-content p {
+    color: var(--text-muted);
+    margin-bottom: 25px;
+    font-size: 15px;
+    text-align: justify;
+}
+
+/* ==========================================================================
+   Collection Section (厳密な横並びグリッドレイアウト)
+   ========================================================================== */
+.grid-row {
+    display: block;
+    margin-bottom: 40px;
+    clear: both;
+}
+
+.grid-row::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.collection-card {
+    float: left;
+    width: 31.33%;
+    margin-right: 3%;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+    background: var(--bg-card);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.collection-card.last-in-row {
+    margin-right: 0;
+}
+
+.collection-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.collection-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 15, 25, 0.85);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.collection-overlay span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-gold);
+    font-family: var(--font-serif);
+    letter-spacing: 0.25em;
+    font-size: 13px;
+    border-bottom: 1px solid var(--accent-gold);
+    padding-bottom: 6px;
+}
+
+.collection-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.collection-card:hover img {
+    transform: scale(1.08);
+}
+
+.collection-card:hover .collection-overlay {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Lesson Section
+   ========================================================================== */
+.lesson-card {
+    float: left;
+    width: 22.75%;
+    margin-right: 3%;
+    background: rgba(19, 26, 44, 0.4);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 45px 25px;
+    text-align: center;
+    min-height: 300px;
+    position: relative;
+    transition: all 0.4s;
+}
+
+.lesson-card:last-child {
+    margin-right: 0;
+}
+
+.lesson-card:hover {
+    border-color: var(--accent-gold);
+    background: rgba(19, 26, 44, 0.7);
+}
+
+.lesson-card h3 {
+    font-family: var(--font-serif);
+    color: var(--accent-gold);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    letter-spacing: 0.1em;
+}
+
+.lesson-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    text-align: left;
+}
+
+.lesson-btn {
+    display: inline-block;
+    padding: 12px 0;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-size: 12px;
+    font-family: var(--font-serif);
+    letter-spacing: 0.2em;
+    transition: all 0.3s;
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+}
+
+.lesson-btn:hover {
+    background: var(--accent-gold);
+    color: var(--bg-dark);
+}
+
+/* ==========================================================================
+   Farm Section
+   ========================================================================== */
+.farm-intro {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 60px auto;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+.fruit-row {
+    text-align: center;
+}
+
+.fruit-item {
+    display: inline-block;
+    width: 17%;
+    margin: 0 1.2%;
+    text-align: center;
+    vertical-align: top;
+}
+
+.fruit-circle-wrapper {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 25px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: var(--bg-card);
+    position: relative;
+}
+
+.fruit-circle-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+
+.fruit-item:hover .fruit-circle-wrapper img {
+    transform: scale(1.1);
+}
+
+.fruit-item h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #fff;
+    letter-spacing: 0.05em;
+}
+
+.fruit-item p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   Instagram Section
+   ========================================================================== */
+.instagram-row {
+    text-align: center;
+}
+
+.instagram-item {
+    display: inline-block;
+    width: 30%;
+    margin: 0 1.5%;
+    border: 1px solid rgba(255,255,255,0.05);
+    background: var(--bg-card);
+    overflow: hidden;
+}
+
+.instagram-item img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.4s, transform 0.4s;
+}
+
+.instagram-item:hover img {
+    opacity: 0.75;
+    transform: scale(1.03);
+}
+
+/* ==========================================================================
+   Contact Section
+   ========================================================================== */
+.contact-container {
+    max-width: 650px;
+    margin: 0 auto;
+    background: rgba(19, 26, 44, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    backdrop-filter: blur(5px);
+    padding: 50px;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--accent-gold);
+    margin-bottom: 10px;
+    letter-spacing: 0.1em;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    background: rgba(11, 15, 25, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 18px;
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    background: rgba(11, 15, 25, 0.9);
+}
+
+.form-group textarea {
+    height: 160px;
+    resize: vertical;
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    padding: 16px;
+    font-family: var(--font-serif);
+    letter-spacing: 0.25em;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+.submit-btn:hover {
+    background: var(--accent-gold);
+    color: var(--bg-dark);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+footer {
+    background: #05070b;
+    padding: 70px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    position: relative;
+    z-index: 2;
+}
+
+.footer-logo {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    letter-spacing: 0.2em;
+    color: #fff;
+    margin-bottom: 25px;
+    font-weight: 300;
+}
+
+.footer-nav {
+    margin-bottom: 35px;
+}
+
+.footer-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12px;
+    margin: 0 18px;
+    letter-spacing: 0.15em;
+    font-family: var(--font-serif);
+    transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+    color: var(--accent-gold);
+}
+
+.copyright {
+    font-size: 11px;
+    color: #374151;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   Responsive Utility (スマホ・タブレット対応)
+   ========================================================================== */
+@media (max-width: 992px) {
+    header { padding: 20px 30px; }
+    .logo { font-size: 20px; }
+    nav ul li { margin-left: 20px; }
+    .hero-content h1 { font-size: 44px; }
+    .brand-table { border-spacing: 0; margin: 0; }
+    .brand-col { display: block; width: 100%; margin-bottom: 40px; }
+    .collection-card { width: 48%; margin-right: 4%; margin-bottom: 40px; }
+    .collection-card.last-in-row { margin-right: 4%; }
+    .collection-card:nth-child(2n) { margin-right: 0; }
+    .lesson-card { width: 48%; margin-right: 4%; margin-bottom: 30px; min-height: auto; }
+    .lesson-card:nth-child(2n) { margin-right: 0; }
+    .fruit-item { width: 45%; margin: 0 2.5% 40px 2.5%; }
+    .instagram-item { width: 45%; margin: 0 2.5% 20px 2.5%; }
+}
+
+@media (max-width: 600px) {
+    nav { display: none; } /* スマホ時はナビを非表示にするシンプルな構成 */
+    .hero-content h1 { font-size: 36px; }
+    .collection-card { width: 100%; margin-right: 0; }
+    .collection-card.last-in-row { margin-right: 0; }
+    .lesson-card { width: 100%; margin-right: 0; }
+    .lesson-btn { position: relative; bottom: 0; left: 0; transform: none; width: 100%; margin-top: 20px; }
+    .fruit-item { width: 100%; margin: 0 0 35px 0; }
+    .instagram-item { width: 100%; margin: 0 0 20px 0; }
+    .contact-container { padding: 30px 20px; }
+}
